@@ -1,4 +1,4 @@
 class Assets {
   Assets._();
-  static const String logo = 'assets/images/Bold Connect.png';
+  static const String logo = 'assets/images/google_logo.png';
 }

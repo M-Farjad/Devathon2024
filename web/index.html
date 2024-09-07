@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <!--
     If you are serving your web app in a path other than the root, change the
@@ -19,6 +20,8 @@
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
   <meta name="description" content="A new Flutter project.">
+  <meta name="google-signin-client_id"
+    content="565335208793-cf42d94kt14cn8i0tkr420rdakl01rl6.apps.googleusercontent.com">
 
   <!-- iOS meta tags & icons -->
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -27,12 +30,105 @@
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="favicon.png"/>
+  <link rel="icon" type="image/png" href="favicon.png" />
 
   <title>prep_master</title>
   <link rel="manifest" href="manifest.json">
+  <!-- <script>
+    var serviceWorkerVersion = "{{flutter_service_worker_version}}";
+  </script>
+  <script src="flutter.js" defer></script> -->
+  <!-- <script>
+    if ("serviceWorker" in navigator && navigator.serviceWorker.controller) {
+      navigator.serviceWorker.controller.postMessage({
+        type: "GET_VERSION"
+      });
+      navigator.serviceWorker.addEventListener("message", function (event) {
+        if (event.data.type === "VERSION_RESULT") {
+          serviceWorkerVersion = event.data.version;
+        }
+      });
+    }
+  </script> -->
+
+  <!-- ! Google Sign In Script Start -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js"></script>
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyD7wlwB_5iflO7u3IXNuNBKcMqj2f-Xos8",
+      authDomain: "prep-master-d1025.firebaseapp.com",
+      projectId: "prep-master-d1025",
+      storageBucket: "prep-master-d1025.appspot.com",
+      messagingSenderId: "565335208793",
+      appId: "1:565335208793:web:a48de3a06dfe41596f5248"
+    };
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+  </script>
+  <!-- ! Google Sign In Script End -->
 </head>
+
 <body>
   <script src="flutter_bootstrap.js" async></script>
+  
+  <!-- ! Script for Notifications Start -->
+  <script src="main.dart.js" type="application/javascript"></script>
+  <!-- <script>
+    console.log('hello');
+    if ('serviceWorker' in navigator) {
+      // Service workers are supported. Use them.
+      window.addEventListener('load', function () {
+        // ADD THIS LINE
+        navigator.serviceWorker.register('/firebase-messaging-sw.js').then((registration) => {
+          console.log('Service Worker registered with scope:', registration.scope);
+        }).catch((err) => {
+          console.log('Service Worker registration failed:', err);
+        });
+        // Wait for registration to finish before dropping the <script> tag.
+        // Otherwise, the browser will load the script multiple times,
+        // potentially different versions.
+        var serviceWorkerUrl = 'flutter_service_worker.js?v=' + serviceWorkerVersion;
+
+        //  ...
+      });
+    }
+  </script> -->
+  <!-- ! Script for Notifications End -->
+
+  <!-- <script>
+    window.addEventListener('load', function (ev) {
+      // Download main.dart.js
+      _flutter.loader.load({
+        serviceWorker: {
+          serviceWorkerVersion: serviceWorkerVersion,
+        },
+        onEntrypointLoaded: function (engineInitializer) {
+          engineInitializer.initializeEngine().then(function (appRunner) {
+            appRunner.runApp();
+          });
+        }
+      });
+    });
+  </script> -->
+  
+  <!-- <script>
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", function () {
+        navigator.serviceWorker.register("firebase-messaging-sw.js").then((registration) => {
+          console.log('Service Worker registered with scope:', registration.scope);
+        }).catch((err) => {
+          console.log('Service Worker registration failed:', err);
+        });
+      });
+    }
+  </script> -->
+  
 </body>
+
 </html>

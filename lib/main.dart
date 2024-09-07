@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'headers.dart';
 
 void main() async {
@@ -5,6 +7,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await FirebaseMessagingUtil.init();
   runApp(const MyApp());
 }
 
@@ -37,6 +40,35 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       _counter++;
     });
+  }
+
+  @override
+  void initState() {
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
+      // Handle incoming message when the app is in the foreground.
+      if (kDebugMode) {
+        log("Foreground onMessage title: ${message.notification?.title}");
+        log("Foreground onMessage body: ${message.notification?.body}");
+        log("Foreground onMessage data: ${message.data}");
+      }
+      if (message.notification != null) {
+        Get.dialog(
+          AlertDialog(
+            title: Text(message.notification?.title ?? ''),
+            content: Text(message.notification?.body ?? ''),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Get.back();
+                },
+                child: const Text('OK'),
+              ),
+            ],
+          ),
+        );
+      }
+    });
+    super.initState();
   }
 
   @override

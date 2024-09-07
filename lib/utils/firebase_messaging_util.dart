@@ -1,8 +1,5 @@
 import 'dart:developer';
 
-import 'package:firebase_core/firebase_core.dart';
-import 'package:prep_master/firebase_options.dart';
-
 import '../headers.dart';
 
 class FirebaseMessagingUtil {
@@ -13,49 +10,52 @@ class FirebaseMessagingUtil {
   static Future<void> init() async {
     await _initFbNotifications();
     // Set up Firebase Cloud Messaging listeners
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
-      // Handle incoming message when the app is in the foreground.
-      if (kDebugMode) {
-        log("Foreground onMessage title: ${message.notification?.title}");
-        log("Foreground onMessage body: ${message.notification?.body}");
-        log("Foreground onMessage data: ${message.data}");
-      }
-      // NotificationHelper.saveNotification(message);
-      // Prefs.saveNotification(message.notification?.body ?? '');
-      if (message.notification != null) {
-        //! Uncomment
-        // await NotificationHelper.showNotification(
-        //   message.notification?.title ?? '',
-        //   message.notification?.body ?? '',
-        // );
-        print("UTILITY SAVE CALLED");
-
-        // final notification = NotificationModel(
-        //   title: message.notification?.title ?? 'No Title',
-        //   body: message.notification?.body ?? 'No Body',
-        //   receivedAt: DateTime.now(),
-        //   data: message.data,
-        // );
-        // debugPrint("Adding in Screen");
-        // _notificationController.addNotification(notification);
-        // await NotificationService().saveBackgroundNotification(message);
-      }
-      // You can implement custom logic to handle the foreground message.
-    });
+    // FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
+    //   // Handle incoming message when the app is in the foreground.
+    //   if (kDebugMode) {
+    //     log("Foreground onMessage title: ${message.notification?.title}");
+    //     log("Foreground onMessage body: ${message.notification?.body}");
+    //     log("Foreground onMessage data: ${message.data}");
+    //   }
+    //   // NotificationHelper.saveNotification(message);
+    //   // Prefs.saveNotification(message.notification?.body ?? '');
+    //   if (message.notification != null) {
+    //     //! Uncomment
+    //     // await NotificationHelper.showNotification(
+    //     //   message.notification?.title ?? '',
+    //     //   message.notification?.body ?? '',
+    //     // );
+    //     print("UTILITY SAVE CALLED");
+    //     // final notification = NotificationModel(
+    //     //   title: message.notification?.title ?? 'No Title',
+    //     //   body: message.notification?.body ?? 'No Body',
+    //     //   receivedAt: DateTime.now(),
+    //     //   data: message.data,
+    //     // );
+    //     // debugPrint("Adding in Screen");
+    //     // _notificationController.addNotification(notification);
+    //     // await NotificationService().saveBackgroundNotification(message);
+    //   }
+    //   // You can implement custom logic to handle the foreground message.
+    // });
   }
 
   static _initFbNotifications() async {
     await Firebase.initializeApp(
         options: DefaultFirebaseOptions.currentPlatform);
-    NotificationSettings settings = await _fcm.requestPermission(
-      sound: true,
-      badge: true,
+    final settings = await _fcm.requestPermission(
       alert: true,
-      provisional: true,
-      carPlay: true,
-      criticalAlert: true,
-      announcement: true,
+      announcement: false,
+      badge: true,
+      carPlay: false,
+      criticalAlert: false,
+      provisional: false,
+      sound: true,
     );
+    final token = await _fcm.getToken(
+        vapidKey:
+            "BBJV9za6iNMgSrvj7H9G-mq-yhfkuTd_1OvGylpo0U0fiw63KBIPOEsELYBhJSqexopt7d9etIiW5m_6134ClFs");
+    print("FCM Token: $token");
     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
       log('User granted permission');
     } else if (settings.authorizationStatus ==

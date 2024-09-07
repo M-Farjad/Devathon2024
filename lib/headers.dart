@@ -15,3 +15,7 @@ export 'values/custom_radius.dart';
 export 'values/custom_theme.dart';
 
 export 'widgets/indicators.dart';
+
+export 'utils/firebase_messaging_util.dart';
+
+export 'models/user_model.dart';
